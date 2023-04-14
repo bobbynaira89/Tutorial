@@ -245,6 +245,16 @@ try:
         print(f'Addition of necessary columns stopped. Option could be to export {layerIn} to a local destination first before exporting to database')
     # end --------------------------------------------------------------------
 
+    ## string layer_out to layer_in to itself to avoid unwanted gaps at nodes that could be an issue during manual checks -- below added on 01/12/22
+
+    # load layer_out 
+    self.uri_db_out.setDataSource(self.road_schema_out, self.road_table_out, "geometry")
+    layer_out = QgsVectorLayer(self.uri_db_out.uri(False), self.road_table_out, "postgres")
+    if not layer_out.isValid():
+        print("1st - layer_out not valid")
+        self.append_logfile(codex, "1st - layer_out not valid for stringing to Ref.")
+        raise BaseException('Process stopped due to invalid layer.')
+
     # finish time
     if float(python_version()[:3]) <= 3.7:
         toc = time.clock()
