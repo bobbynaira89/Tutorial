@@ -255,6 +255,10 @@ try:
         self.append_logfile(codex, "1st - layer_out not valid for stringing to Ref.")
         raise BaseException('Process stopped due to invalid layer.')
 
+    # Adddddded for error merge test
+    self.uri_db_out.setDataSource(self.road_schema_out, self.road_table_out, "geometry")
+    layer_out = QgsVectorLayer(self.uri_db_out.uri(False), self.road_table_out, "postgres")
+    
     # finish time
     if float(python_version()[:3]) <= 3.7:
         toc = time.clock()
